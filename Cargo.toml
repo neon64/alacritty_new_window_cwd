@@ -1,0 +1,9 @@
+[package]
+authors = ["Chris Chamberlain <c.chamberlain@iinet.net.au>"]
+edition = "2018"
+name = "alacritty_new_window_cwd"
+version = "0.1.0"
+
+[dependencies]
+dirs = "1.0.4"
+i3ipc = { git = "https://github.com/neon64/i3ipc-rs", version = "0.9.0" }
