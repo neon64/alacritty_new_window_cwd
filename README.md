@@ -8,8 +8,13 @@ No means foolproof. Probably will break everything, but try it anyway.
 
 Sway keybinding:
 
-```rust
+```
 set $term ~/Code/Rust/alacritty_new_window_cwd/target/release/alacritty_new_window_cwd
 bindsym $mod+Return exec $term
 ```
 
+Alacritty config
+
+```yaml
+- { key: T,        mods: Control,          command: { program: "bash", args: ["-c", "~/Code/Rust/alacritty_new_window_cwd/target/release/alacritty_new_window_cwd"] } }
+```
