@@ -10,7 +10,7 @@ fn main() {
     let mut connection = I3Connection::connect().expect("couldn't connect to sway socket");
     let root_node = connection.get_tree().expect("coudln't get tree");
     if let Some(path) = try_find_cwd(&root_node) {
-        println!("{:?}", path);
+        println!("Launching Alacritty at {:?}", path);
         Command::new("alacritty").args(&["--working-directory", path.to_str().unwrap()]).spawn().unwrap();
     } else {
         println!("No cwd found");
@@ -40,7 +40,7 @@ fn get_cwd_from_pid(pid: i64) -> io::Result<PathBuf> {
             .output()?;
     let child_pid = String::from_utf8_lossy(&output.stdout);
     let child_pid = child_pid.split("\n").next().unwrap().trim();
-    println!("child pid {}", child_pid);
+    println!("Getting working directory from process with PID {}", child_pid);
     let mut cwd_path = PathBuf::from("/proc");
     cwd_path.push(&child_pid);
     cwd_path.push("cwd");
