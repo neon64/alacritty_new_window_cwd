@@ -30,11 +30,20 @@ fn get_focused_node(node: &Node) -> Option<&Node> {
 
 fn try_find_cwd<'a>(node: &'a Node) -> Option<PathBuf> {
     let focused_node = get_focused_node(node)?;
-    //println!("{:?}", focused_node);
-    Some(get_cwd_from_pid(focused_node.pid?).expect("failed to read current working directory"))
+    println!("PID of focused node: {:?}", focused_node.pid);
+    match get_cwd_from_pid(focused_node.pid?) {
+        Ok(cwd) => Some(cwd),
+        Err(e) => {
+            println!("{:?}", e);
+            None
+        }
+    }
 }
 
 fn get_cwd_from_pid(pid: i64) -> io::Result<PathBuf> {
+    if pid == 0 {
+        return Err(io::ErrorKind::InvalidInput.into());
+    }
     let output = Command::new("pgrep")
             .args(&["-P", &pid.to_string()])
             .output()?;
